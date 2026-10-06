@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_shared_working_shifts",
+  "info": {
+    "displayName": "Working Shift",
+    "description": "Shift jam kerja (component_working_shift)"
+  },
+  "options": {},
+  "attributes": {
+    "shift_name": { "type": "string", "required": true },
+    "working_hours_text": { "type": "string", "required": true }
+  }
+}

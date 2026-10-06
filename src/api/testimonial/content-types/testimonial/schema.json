@@ -1,0 +1,14 @@
+{
+  "kind": "collectionType",
+  "collectionName": "testimonials",
+  "info": { "singularName": "testimonial", "pluralName": "testimonials", "displayName": "Testimonial (Ulasan Siswa)" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "company": { "type": "relation", "relation": "manyToOne", "target": "api::company.company", "inversedBy": "testimonials" },
+    "student_name": { "type": "string", "required": true },
+    "school_name": { "type": "string" },
+    "avatar": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "quote": { "type": "text", "required": true }
+  }
+}

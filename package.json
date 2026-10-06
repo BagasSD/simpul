@@ -1,0 +1,33 @@
+{
+  "name": "simpul-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SIMPUL - Sistem Informasi Magang & Pilihan Untuk Lapangan (Strapi v5 + PostgreSQL)",
+  "scripts": {
+    "build": "strapi build",
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "seed": "node scripts/seed.js",
+    "strapi": "strapi"
+  },
+  "dependencies": {
+    "@strapi/plugin-users-permissions": "^5.12.0",
+    "@strapi/provider-upload-cloudinary": "^5.56.0",
+    "@strapi/strapi": "^5.12.0",
+    "pg": "8.8.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
+    "styled-components": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22.13.0 <=24.x.x",
+    "npm": ">=6.0.0"
+  }
+}

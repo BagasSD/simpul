@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "company_roles",
+  "info": {
+    "singularName": "company-role",
+    "pluralName": "company-roles",
+    "displayName": "Company Role (Posisi di Tempat PKL)",
+    "description": "Penghubung Company - Role - Major beserta tugas spesifik"
+  },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "company": { "type": "relation", "relation": "manyToOne", "target": "api::company.company", "inversedBy": "roles" },
+    "role": { "type": "relation", "relation": "manyToOne", "target": "api::role.role", "inversedBy": "company_roles" },
+    "responsibilities": { "type": "json" }
+  }
+}

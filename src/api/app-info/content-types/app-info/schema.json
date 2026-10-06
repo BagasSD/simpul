@@ -1,0 +1,13 @@
+{
+  "kind": "singleType",
+  "collectionName": "app_infos",
+  "info": { "singularName": "app-info", "pluralName": "app-infos", "displayName": "App Info (Profil Aplikasi)" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true, "default": "Tentang Kami" },
+    "app_full_name": { "type": "string", "default": "Sistem Informasi Magang & Pilihan Untuk Lapangan" },
+    "content": { "type": "richtext" },
+    "logo": { "type": "media", "multiple": false, "allowedTypes": ["images"] }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "majors",
+  "info": { "singularName": "major", "pluralName": "majors", "displayName": "Major (Jurusan)", "description": "Master jurusan sekolah" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "code": { "type": "string", "required": true, "unique": true },
+    "icon": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "description": { "type": "text" },
+    "companies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::company.company",
+      "inversedBy": "majors"
+    }
+  }
+}

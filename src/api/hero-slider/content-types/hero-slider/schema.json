@@ -1,0 +1,16 @@
+{
+  "kind": "collectionType",
+  "collectionName": "hero_sliders",
+  "info": { "singularName": "hero-slider", "pluralName": "hero-sliders", "displayName": "Hero Slider", "description": "Banner slider landing page" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "subtitle": { "type": "text" },
+    "image": { "type": "media", "multiple": false, "allowedTypes": ["images"] },
+    "cta_text": { "type": "string" },
+    "cta_link": { "type": "string" },
+    "sort_order": { "type": "integer", "default": 0 },
+    "is_active": { "type": "boolean", "default": true }
+  }
+}

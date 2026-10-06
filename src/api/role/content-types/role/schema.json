@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "job_roles",
+  "info": { "singularName": "role", "pluralName": "roles", "displayName": "Role (Posisi Pekerjaan)", "description": "Katalog role pekerjaan global" },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text" },
+    "company_roles": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::company-role.company-role",
+      "mappedBy": "role"
+    }
+  }
+}
