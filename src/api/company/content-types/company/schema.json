@@ -7,26 +7,63 @@
     "displayName": "Company (Tempat PKL)",
     "description": "Profil tempat PKL"
   },
-  "options": { "draftAndPublish": false },
+  "options": {
+    "draftAndPublish": false
+  },
   "pluginOptions": {},
   "attributes": {
-    "name": { "type": "string", "required": true },
-    "description": { "type": "text" },
-    "address": { "type": "text" },
-    "distance_note": { "type": "string" },
-    "google_maps_url": { "type": "string" },
-    "images": { "type": "media", "multiple": true, "allowedTypes": ["images"] },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "address": {
+      "type": "text"
+    },
+    "distance_note": {
+      "type": "string"
+    },
+    "google_maps_url": {
+      "type": "string"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
     "quota_status": {
       "type": "enumeration",
-      "enum": ["Terbatas", "Tersedia", "Penuh"],
+      "enum": [
+        "Terbatas",
+        "Tersedia",
+        "Penuh"
+      ],
       "default": "Tersedia",
       "required": true
     },
-    "rating": { "type": "float", "min": 0, "max": 5 },
-    "working_hours": { "type": "component", "repeatable": true, "component": "shared.working-shift" },
-    "requirements": { "type": "json" },
-    "facilities": { "type": "json" },
-    "contact_info": { "type": "json" },
+    "rating": {
+      "type": "float",
+      "min": 0,
+      "max": 5
+    },
+    "working_hours": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.working-shift"
+    },
+    "requirements": {
+      "type": "json"
+    },
+    "facilities": {
+      "type": "json"
+    },
+    "contact_info": {
+      "type": "json"
+    },
     "majors": {
       "type": "relation",
       "relation": "manyToMany",
@@ -43,6 +80,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::testimonial.testimonial",
+      "mappedBy": "company"
+    },
+    "business_fields": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::business-field.business-field",
       "mappedBy": "company"
     }
   }

@@ -1,6 +1,23 @@
 // Mendukung DATABASE_URL (Railway) atau variabel koneksi terpisah (development lokal).
 export default ({ env }) => {
   const databaseUrl = env('DATABASE_URL');
+  const host = env('DATABASE_HOST', env('PGHOST', '127.0.0.1'));
+  const port = env.int('DATABASE_PORT', env.int('PGPORT', 5432));
+  const database = env('DATABASE_NAME', env('PGDATABASE', 'simpul'));
+  const user = env('DATABASE_USERNAME', env('PGUSER', 'postgres'));
+  const password = env('DATABASE_PASSWORD', env('PGPASSWORD', 'postgres'));
+  const isProduction = env('NODE_ENV') === 'production';
+
+  if (
+    isProduction &&
+    !databaseUrl &&
+    ['127.0.0.1', 'localhost', '::1'].includes(host)
+  ) {
+    throw new Error(
+      'Production database is not configured. Set DATABASE_URL to the Railway PostgreSQL reference variable.',
+    );
+  }
+
   const ssl = env.bool('DATABASE_SSL', false)
     ? { rejectUnauthorized: env.bool('DATABASE_SSL_REJECT_UNAUTHORIZED', true) }
     : false;
@@ -12,11 +29,11 @@ export default ({ env }) => {
         ...(databaseUrl
           ? { connectionString: databaseUrl }
           : {
-              host: env('DATABASE_HOST', '127.0.0.1'),
-              port: env.int('DATABASE_PORT', 5432),
-              database: env('DATABASE_NAME', 'simpul'),
-              user: env('DATABASE_USERNAME', 'postgres'),
-              password: env('DATABASE_PASSWORD', 'postgres'),
+              host,
+              port,
+              database,
+              user,
+              password,
             }),
         schema: env('DATABASE_SCHEMA', 'public'),
         ssl,

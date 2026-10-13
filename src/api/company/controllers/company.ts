@@ -2,14 +2,15 @@ import { factories } from '@strapi/strapi';
 
 export default factories.createCoreController('api::company.company', () => ({
   async find(ctx) {
-    const { major, role, search } = ctx.query;
+    const { major, role, bidang, search } = ctx.query;
     delete ctx.query.major;
     delete ctx.query.role;
+    delete ctx.query.bidang;
     delete ctx.query.search;
 
     const searchTerm = typeof search === 'string' ? search.trim() : '';
 
-    if (major || role || searchTerm) {
+    if (major || role || bidang || searchTerm) {
       const currentFilters = ctx.query.filters;
       const filters: Record<string, any> =
         currentFilters && typeof currentFilters === 'object' && !Array.isArray(currentFilters)
@@ -37,11 +38,20 @@ export default factories.createCoreController('api::company.company', () => ({
         };
       }
 
+      if (bidang) {
+        const fieldsFilters = filters.business_fields ?? {};
+        filters.business_fields = {
+          ...fieldsFilters,
+          documentId: { ...(fieldsFilters.documentId ?? {}), $eq: bidang },
+        };
+      }
+
       if (searchTerm) {
         const searchFilters = [
           { name: { $containsi: searchTerm } },
           { majors: { name: { $containsi: searchTerm } } },
           { roles: { role: { title: { $containsi: searchTerm } } } },
+          { business_fields: { name: { $containsi: searchTerm } } },
         ];
 
         if (filters.$or || Array.isArray(filters.$and)) {

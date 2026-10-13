@@ -29,15 +29,17 @@ const SEED = {
       whatsapp: '6280000000000',
     },
   },
+  businessFields: ['Teknologi Informasi', 'Administrasi', 'Pemasaran'],
   placements: [
     { roleTitle: 'Web Developer', responsibilities: ['Membantu membuat halaman web', 'Menguji fitur aplikasi'] },
     { roleTitle: 'Staf Administrasi', responsibilities: ['Membantu mengarsipkan dokumen', 'Mencatat data administrasi'] },
     { roleTitle: 'Staf Pemasaran', responsibilities: ['Membantu menyiapkan materi promosi', 'Mendukung pencatatan kegiatan pemasaran'] },
   ],
   testimonial: {
-    student_name: 'Siswa Contoh',
+    full_name: 'Siswa Contoh',
     school_name: 'Sekolah Contoh',
-    quote: 'Testimoni simulasi untuk melihat tampilan data. Ganti dengan testimoni yang sudah mendapat izin publikasi.',
+    major: 'Rekayasa Perangkat Lunak',
+    review: 'Testimoni simulasi untuk melihat tampilan data. Ganti dengan testimoni yang sudah mendapat izin publikasi.',
   },
   heroSlider: {
     title: 'Temukan Tempat PKL yang Tepat',
@@ -58,6 +60,7 @@ const UIDS = {
   major: 'api::major.major',
   role: 'api::role.role',
   company: 'api::company.company',
+  businessField: 'api::business-field.business-field',
   companyRole: 'api::company-role.company-role',
   testimonial: 'api::testimonial.testimonial',
   heroSlider: 'api::hero-slider.hero-slider',
@@ -107,6 +110,22 @@ async function seed(strapi) {
     `perusahaan ${SEED.company.name}`,
   );
 
+  for (const name of SEED.businessFields) {
+    await createIfMissing(
+      strapi,
+      UIDS.businessField,
+      {
+        name: { $eq: name },
+        company: { documentId: { $eq: company.documentId } },
+      },
+      {
+        name,
+        company: { connect: [company.documentId] },
+      },
+      `bidang perusahaan ${name}`,
+    );
+  }
+
   await strapi.documents(UIDS.company).update({
     documentId: company.documentId,
     data: {
@@ -137,7 +156,7 @@ async function seed(strapi) {
   await createIfMissing(
     strapi,
     UIDS.testimonial,
-    { student_name: { $eq: SEED.testimonial.student_name }, company: { documentId: { $eq: company.documentId } } },
+    { full_name: { $eq: SEED.testimonial.full_name }, company: { documentId: { $eq: company.documentId } } },
     { ...SEED.testimonial, company: { connect: [company.documentId] } },
     'testimoni contoh',
   );

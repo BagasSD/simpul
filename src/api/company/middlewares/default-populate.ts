@@ -11,6 +11,7 @@ export default (_config: unknown, _opts: unknown) => {
         populate: {
           images: true,
           majors: true,
+          business_fields: true,
           working_hours: true,
         },
       };

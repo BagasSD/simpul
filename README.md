@@ -95,7 +95,7 @@ Format JSON yang dipakai:
 | Info aplikasi | `/api/app-info?populate=*` |
 | Testimoni | `/api/testimonials?populate=*` |
 
-**`/api/companies` otomatis sudah berisi** gambar, jam kerja, dan jurusan. `roles` dan `testimonials` tidak ikut dikirim secara default; keduanya tetap dapat dipakai untuk filter di server, atau diminta secara eksplisit dengan `populate`.
+**`/api/companies` otomatis sudah berisi** gambar, jam kerja, jurusan, dan bidang perusahaan. `roles` dan `testimonials` tidak ikut dikirim secara default; keduanya tetap dapat dipakai untuk filter di server, atau diminta secara eksplisit dengan `populate`.
 
 Setiap item di `/api/majors` menyertakan `companies_count`, yaitu jumlah perusahaan yang terhubung langsung melalui relasi many-to-many `companies`.
 
@@ -107,6 +107,7 @@ Setiap item di `/api/majors` menyertakan `companies_count`, yaitu jumlah perusah
 | :-- | :-- |
 | Berdasarkan **jurusan** | `?major={majorDocumentId}` |
 | Berdasarkan **role** | `?role={roleDocumentId}` |
+| Berdasarkan **bidang perusahaan** | `?bidang={businessFieldDocumentId}` |
 | Jurusan **dan** role | `?major={majorDocumentId}&role={roleDocumentId}` |
 | Search nama company, jurusan, atau role | `?search=developer` |
 | Berdasarkan nama | `?filters[name][$containsi]=plaza` |
@@ -116,7 +117,9 @@ Setiap item di `/api/majors` menyertakan `companies_count`, yaitu jumlah perusah
 
 Semua filter bisa digabung dengan `&`. Default 25 data per halaman (maks 100).
 
-> Parameter ringkas `major` dan `role` menerima `documentId`. Masing-masing boleh dipakai sendiri; jika keduanya dikirim, perusahaan harus cocok dengan jurusan **dan** role (AND). `search` mencari teks tanpa membedakan huruf besar/kecil pada nama company, nama jurusan, atau judul role. Search dapat digabung dengan `major`/`role`; setiap batasan yang dikirim harus terpenuhi. Semua parameter juga dapat digabung dengan sorting dan pagination Strapi lainnya. Bentuk filter Strapi standar tetap didukung. Jurusan terhubung langsung ke perusahaan; role dan tanggung jawab berada di relasi `company.roles` dan tidak terikat ke jurusan tertentu.
+> Parameter ringkas `major`, `role`, dan `bidang` menerima `documentId`. Masing-masing boleh dipakai sendiri; jika beberapa dikirim, perusahaan harus cocok dengan semua filter (AND). `search` mencari teks tanpa membedakan huruf besar/kecil pada nama company, nama jurusan, judul role, atau bidang perusahaan. Search dapat digabung dengan filter tersebut. Semua parameter juga dapat digabung dengan sorting dan pagination Strapi lainnya. Bentuk filter Strapi standar tetap didukung.
+
+Testimoni dapat dibuat melalui `POST /api/testimonials` dengan `company` (documentId), `full_name`, `school_name`, `major`, dan `review`. `is_featured` bernilai `false` secara default dan dapat difilter melalui `GET /api/testimonials?filters[is_featured][$eq]=true`. Endpoint featured menerima filter company opsional: `GET /api/testimonials/featured?company={companyDocumentId}`.
 
 ---
 
@@ -241,6 +244,10 @@ UPLOAD_PROVIDER=cloudinary
 ```
 
 Railway menyediakan `DATABASE_URL` melalui private network untuk koneksi antarlayanan; aplikasi membaca URL tersebut jika tersedia, dan tetap memakai `DATABASE_*` terpisah untuk development lokal. Jangan set `PORT` sendiri; Railway menyediakannya. [Dokumentasi Railway PostgreSQL](https://docs.railway.com/databases/postgresql), [Build dan Start Commands](https://docs.railway.com/builds/build-and-start-commands).
+
+Jika log menampilkan `ECONNREFUSED 127.0.0.1:5432`, service Strapi belum menerima variabel database Railway. Tambahkan `DATABASE_URL=${{Postgres.DATABASE_URL}}` pada **service Strapi** (atau set seluruh variabel `PGHOST`, `PGPORT`, `PGUSER`, `PGPASSWORD`, dan `PGDATABASE`). Aplikasi kini menghentikan startup dengan pesan konfigurasi yang jelas jika production masih menunjuk localhost.
+
+Jika log menampilkan `npm warn config production`, hapus `NPM_CONFIG_PRODUCTION` dari Railway Variables. Opsi npm tersebut sudah deprecated; bila memang perlu menghilangkan dev dependencies, gunakan `--omit=dev` pada perintah install yang sesuai. [Dokumentasi konfigurasi npm](https://docs.npmjs.com/cli/v11/using-npm/config/).
 
 Tambahkan secret Strapi dengan nilai acak dan berbeda untuk setiap variabel:
 

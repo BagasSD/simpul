@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "business_fields",
+  "info": {
+    "singularName": "business-field",
+    "pluralName": "business-fields",
+    "displayName": "Business Field (Bidang Perusahaan)",
+    "description": "Bidang usaha perusahaan"
+  },
+  "options": { "draftAndPublish": false },
+  "pluginOptions": {},
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "inversedBy": "business_fields",
+      "required": true
+    }
+  }
+}
